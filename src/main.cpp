@@ -1,7 +1,6 @@
 #include <iostream>
-#include "queue.hpp"
+#include "LockFreeQueue.hpp"
 
 int main() {
-    std::cout << add(2, 3) << "\n";
     return 0;
 }

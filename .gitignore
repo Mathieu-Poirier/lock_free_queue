@@ -1,8 +1,8 @@
 # Build directories
-/build/
+build/
 autom4te.cache/
 
-# Object / library / binary artifacts
+# Objects / deps / libs / binaries
 *.o
 *.lo
 *.a
@@ -10,6 +10,11 @@ autom4te.cache/
 *.so
 *.so.*
 *.dylib
+*.Po
+*.Plo
+*.trs
+src/lock_free_queue
+tests/test_queue
 
 # Autotools generated files
 aclocal.m4
@@ -25,10 +30,13 @@ missing
 test-driver
 
 # Generated makefiles
-Makefile.in
 Makefile
+Makefile.in
 
-# Editor/temp files
+# Automake test harness output
+*.log
+
+# Editor/temp
 *.swp
 *.tmp
 *~
