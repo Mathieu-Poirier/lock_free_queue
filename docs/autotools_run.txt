@@ -1,0 +1,4 @@
+autoreconf -fi
+./configure
+make
+make check

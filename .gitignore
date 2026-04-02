@@ -1,0 +1,34 @@
+# Build directories
+/build/
+autom4te.cache/
+
+# Object / library / binary artifacts
+*.o
+*.lo
+*.a
+*.la
+*.so
+*.so.*
+*.dylib
+
+# Autotools generated files
+aclocal.m4
+ar-lib
+compile
+config.log
+config.status
+configure
+configure~
+depcomp
+install-sh
+missing
+test-driver
+
+# Generated makefiles
+Makefile.in
+Makefile
+
+# Editor/temp files
+*.swp
+*.tmp
+*~
