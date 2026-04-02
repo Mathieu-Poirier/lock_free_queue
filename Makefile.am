@@ -1,2 +1,2 @@
-AM_CXXFLAGS = -std=c++20
+AM_CXXFLAGS = -std=c++26
 SUBDIRS = src tests

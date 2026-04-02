@@ -13,6 +13,7 @@ autom4te.cache/
 *.Po
 *.Plo
 *.trs
+*.elf
 src/lock_free_queue
 tests/test_queue
 
@@ -40,3 +41,7 @@ Makefile.in
 *.swp
 *.tmp
 *~
+
+tests/test_LockFreeQueue
+tests/test_LockFreeQueueBuilder
+tests/test_CLI

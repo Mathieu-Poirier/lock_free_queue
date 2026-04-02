@@ -7,11 +7,18 @@
 #include <memory>
 #include "LockFreeQueueBuilder.hpp"
 
+enum class LockFreeQueueResult {
+    Destroyed,
+    AppendSuccess,
+    Full,
+    Empty,
+};
+
 struct LockFreeQueue;
 
 // @ For C-style opaque we usually just use pointers
 // @ Type should maybe just be uint64_t
 LockFreeQueue* CreateQueue(const LockFreeQueueBuilder* builder);
-LockFreeQueue* DestroyQueue(LockFreeQueue queue);
-LockFreeQueue* AppendTo(LockFreeQueue* queue, uint64_t value);
+LockFreeQueueResult DestroyQueue(LockFreeQueue queue);
+LockFreeQueueResult AppendTo(LockFreeQueue* queue, uint64_t value);
 
