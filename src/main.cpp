@@ -5,7 +5,7 @@
 
 int main() {
     LockFreeQueueBuilder* queueBuilder = CreateLockFreeQueueBuilder();
-    BuildSize(queueBuilder, 0);
-    DestroyLockFreeQueueBuilder(queueBuilder);
+    // BuildSize(queueBuilder, 0);
+    // DestroyLockFreeQueueBuilder(queueBuilder);
     return 0;
 }
