@@ -1,4 +1,4 @@
-check_PROGRAMS = test_LockFreeQueue test_LockFreeQueueBuilder test_CLI
+check_PROGRAMS = test_LockFreeQueue test_LockFreeQueueBuilder test_CLI test_BufferSize
 TESTS = $(check_PROGRAMS)
 
 test_LockFreeQueue_SOURCES = test_LockFreeQueue.cpp
