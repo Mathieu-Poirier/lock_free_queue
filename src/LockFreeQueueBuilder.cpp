@@ -1,26 +1,28 @@
 #include "LockFreeQueue.hpp"
 #include "LockFreeQueueBuilder.hpp"
+#include "BufferSize.hpp"
 
-#include <functional>
-
-// @ Parse this from CLI
-constexpr unsigned int MAX_QUEUE_SIZE = 1024;
-constexpr unsigned int MAX_FILEPATH_LENGTH = 4096;
+#include <cstddef>
+#include <stdexcept>
 
 struct LockFreeQueueBuilder {
-    std::size_t size;
+    BufferSize size;
     const char* filePath;
-    size_t filePathLength;
+    BufferSize filePathLength;
 };
 
 void LockFreeQueueBuilderInitialize(LockFreeQueueBuilder* lockFreeQueueBuilder){
-    lockFreeQueueBuilder->size = 0uz;
+    lockFreeQueueBuilder->size = BufferSize(std::size_t{1});
+    lockFreeQueueBuilder->filePath = "";
+    lockFreeQueueBuilder->filePathLength = BufferSize(std::size_t{1});
 }
 
 LockFreeQueueBuilder* CreateLockFreeQueueBuilder(){
-    LockFreeQueueBuilder* builder = new LockFreeQueueBuilder{};
-    LockFreeQueueBuilderInitialize(builder);
-    return builder;
+    return new LockFreeQueueBuilder{
+        BufferSize(std::size_t{1uz}),
+        "",
+        BufferSize(std::size_t{1uz})
+    };
 }
 
 void DestroyLockFreeQueueBuilder(LockFreeQueueBuilder*& lockFreeQueueBuilder){
@@ -28,36 +30,25 @@ void DestroyLockFreeQueueBuilder(LockFreeQueueBuilder*& lockFreeQueueBuilder){
     lockFreeQueueBuilder = nullptr;
 }
 
-void BuildSize(LockFreeQueueBuilder* lockFreeQueueBuilder, std::size_t size){
-    if(size == 0uz){
-        throw std::invalid_argument("You cannot make a LockFreeQueueBuilder with size equal to 0");
-    }
-    
-    if(size > MAX_QUEUE_SIZE){
-        throw std::invalid_argument("You cannot make a LockFreeQueueBuilder with size > MAX_QUEUE_SIZE");
-    }
-    lockFreeQueueBuilder->size = size;
+void BuildSize(LockFreeQueueBuilder* lockFreeQueueBuilder, const BufferSize size){
+    lockFreeQueueBuilder->size.set(size);
 }
 
-void BuildFilePath(LockFreeQueueBuilder* lockFreeQueueBuilder, const char* filePath, const std::size_t filePathLength){
-    // Probably make some guards on input too
+void BuildFilePath(
+    LockFreeQueueBuilder* lockFreeQueueBuilder,
+    const char* filePath,
+    const BufferSize filePathLength
+){
     if(filePath == nullptr){
         throw std::invalid_argument("You cannot make a LockFreeQueueBuilder with filePath == nullptr");
     }
-    if(filePathLength <= 0){
-        throw std::invalid_argument("You cannot make a LockFreeQueueBuilder with filePathLength <= 0");
+
+    if(filePath[filePathLength.get() - 1] != '\0'){
+        throw std::invalid_argument(
+            "You cannot make a LockFreeQueueBuilder with something that is not null terminated"
+        );
     }
-    // Need to enforce extra things in an encapsulated function on the caller side to minimize misuse where buffer can be larger than size which truncates
-    if(filePathLength > MAX_FILEPATH_LENGTH){
-        throw std::invalid_argument("You cannot make a LockFreeQueueBuilder with filePathLength > MAX_FILEPATH_LENGTH");
-    }
-    // @ Length to index, this is UB though so might still pass even when the string isn't null terminated presumably
-    if(filePath[filePathLength - 1] != '\0'){
-        throw std::invalid_argument("You cannot make a LockFreeQueueBuilder with something that is not null terminated");
-    }
-    // 
-    // Set
+
     lockFreeQueueBuilder->filePath = filePath;
-    // Max we will read from the buffer
-    lockFreeQueueBuilder->filePathLength = filePathLength;
+    lockFreeQueueBuilder->filePathLength.set(filePathLength);
 }
