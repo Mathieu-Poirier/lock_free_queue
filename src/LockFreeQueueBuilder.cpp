@@ -8,6 +8,7 @@ constexpr unsigned int MAX_QUEUE_SIZE = 1024;
 
 struct LockFreeQueueBuilder {
     std::size_t size;
+    const char* filePath;
 };
 
 void LockFreeQueueBuilderInitialize(LockFreeQueueBuilder* lockFreeQueueBuilder){
@@ -35,3 +36,5 @@ void BuildSize(LockFreeQueueBuilder* lockFreeQueueBuilder, std::size_t size){
     }
     lockFreeQueueBuilder->size = size;
 }
+
+void BuildFilePath(LockFreeQueueBuilder* lockFreeQueueBuilder, const char* filePath){}
