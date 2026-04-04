@@ -3,6 +3,7 @@ build/
 autom4te.cache/
 
 .codex
+.editorconfig
 
 # Objects / deps / libs / binaries
 *.o

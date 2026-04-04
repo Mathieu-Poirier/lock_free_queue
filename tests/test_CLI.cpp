@@ -1,2 +1,2 @@
-#include <gtest/gtest.h>
 #include "CLI.hpp"
+#include <gtest/gtest.h>

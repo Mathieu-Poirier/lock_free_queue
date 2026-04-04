@@ -1,6 +1,4 @@
-#include <gtest/gtest.h>
 #include "LockFreeQueue.hpp"
+#include <gtest/gtest.h>
 
-TEST(QueueTest, AppendSingleUint64ToLockFreeQueue) {
-
-}
+TEST(QueueTest, AppendSingleUint64ToLockFreeQueue) {}

@@ -1,8 +1,5 @@
 #pragma once
 
-enum class CLIStatus {
-    ParseSuccess,
-    ParseFail
-};
+enum class CLIStatus { ParseSuccess, ParseFail };
 
 CLIStatus ParseLine();
