@@ -11,6 +11,7 @@ struct LockFreeQueueBuilder {
   BufferSize filePathLength;
 };
 
+// @ These two are sort of the same the initialize thing would probably be better if we overload what parameters we can pass
 void LockFreeQueueBuilderInitialize(
     LockFreeQueueBuilder *lockFreeQueueBuilder) {
   lockFreeQueueBuilder->size = BufferSize(std::size_t{1});

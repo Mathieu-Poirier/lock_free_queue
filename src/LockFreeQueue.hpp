@@ -14,6 +14,7 @@ enum class LockFreeQueueResult {
   Empty,
 };
 
+// MWMR Data Structure
 struct LockFreeQueue;
 
 // @ For C-style opaque we usually just use pointers
@@ -25,6 +26,8 @@ struct LockFreeQueue;
 // same thing every time with some sort of id of where the data file is to be
 // written and it's taken like from the CLI part of the profroam and new readers
 // / writers temporarily open it
+
+// Since we have the file encapsulated from the builder
 LockFreeQueue *CreateQueue(const LockFreeQueueBuilder *builder);
 LockFreeQueueResult DestroyQueue(LockFreeQueue queue);
 // LockFreeQueueResult AppendTo(LockFreeQueue* queue, uint64_t value);
