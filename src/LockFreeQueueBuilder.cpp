@@ -13,7 +13,7 @@ struct LockFreeQueueBuilder {
 
 // @ These two are sort of the same the initialize thing would probably be better if we overload what parameters we can pass
 void LockFreeQueueBuilderInitialize(
-    LockFreeQueueBuilder *lockFreeQueueBuilder) {
+  LockFreeQueueBuilder *lockFreeQueueBuilder) {
   lockFreeQueueBuilder->size = BufferSize(std::size_t{1});
   lockFreeQueueBuilder->filePath = "";
   lockFreeQueueBuilder->filePathLength = BufferSize(std::size_t{1});
@@ -48,4 +48,20 @@ void BuildFilePath(LockFreeQueueBuilder *lockFreeQueueBuilder,
 
   lockFreeQueueBuilder->filePath = filePath;
   lockFreeQueueBuilder->filePathLength.set(filePathLength);
+}
+
+BufferSize GetSize(const LockFreeQueueBuilder *lockFreeQueueBuilder) {
+  if (lockFreeQueueBuilder == nullptr) {
+    throw std::invalid_argument("LockFreeQueueBuilder cannot be nullptr");
+  }
+
+  return lockFreeQueueBuilder->size;
+}
+
+const char *GetFilePath(const LockFreeQueueBuilder *lockFreeQueueBuilder) {
+  if (lockFreeQueueBuilder == nullptr) {
+    throw std::invalid_argument("LockFreeQueueBuilder cannot be nullptr");
+  }
+
+  return lockFreeQueueBuilder->filePath;
 }

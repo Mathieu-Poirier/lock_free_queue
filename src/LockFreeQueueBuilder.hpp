@@ -13,3 +13,7 @@ void BuildSize(LockFreeQueueBuilder *lockFreeQueueBuilder,
                const BufferSize size);
 void BuildFilePath(LockFreeQueueBuilder *lockFreeQueueBuilder,
                    const char *filePath, const BufferSize filePathLenght);
+
+[[nodiscard]] BufferSize GetSize(const LockFreeQueueBuilder *lockFreeQueueBuilder);
+[[nodiscard]] const char *GetFilePath(
+    const LockFreeQueueBuilder *lockFreeQueueBuilder);
