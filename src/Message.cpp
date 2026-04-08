@@ -1,20 +1,48 @@
-#include <atomic>
-#include <cstddef>
 #include "Message.hpp"
 
-struct Message{
+#include <atomic>
+#include <stdexcept>
+
+struct Message {
   std::atomic<unsigned int> sequenceNumber;
   std::atomic<unsigned int> value;
 };
 
-/*
+Message *CreateMessage() { return new Message{0u, 0u}; }
 
-Get the value of the message
+void DestroyMessage(Message *&message) {
+  delete message;
+  message = nullptr;
+}
 
-change the value
+BufferSize GetMessageSize() {
+  return BufferSize(std::size_t{sizeof(Message)});
+}
 
-compare if the value is still the same as when the function started
+unsigned int GetSequenceNumber(const Message *message) {
+  if (message == nullptr) {
+    throw std::invalid_argument("Message is nullptr when passed to GetSequenceNumber");
+  }
+  return message->sequenceNumber.load(std::memory_order_relaxed);
+}
 
-swap values
+void SetSequenceNumber(Message *message, unsigned int sequenceNumber) {
+  if (message == nullptr) {
+    throw std::invalid_argument("Message is nullptr when passed to SetSequenceNumber");
+  }
+  message->sequenceNumber.store(sequenceNumber, std::memory_order_relaxed);
+}
 
-*/
+unsigned int GetValue(const Message *message) {
+  if (message == nullptr) {
+    throw std::invalid_argument("Message is nullptr when passed to GetValue");
+  }
+  return message->value.load(std::memory_order_relaxed);
+}
+
+void SetValue(Message *message, unsigned int value) {
+  if (message == nullptr) {
+    throw std::invalid_argument("Message is nullptr when passed to SetValue");
+  }
+  message->value.store(value, std::memory_order_relaxed);
+}
