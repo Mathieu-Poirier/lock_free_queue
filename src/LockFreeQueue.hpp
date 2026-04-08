@@ -1,5 +1,6 @@
 #pragma once
 #include "LockFreeQueueBuilder.hpp"
+#include "Message.hpp"
 #include <cstddef>
 #include <cstdint>
 #include <iostream>
@@ -25,9 +26,23 @@ struct LockFreeQueue;
 // the Reader/Writer making the data structure? Maybe have a file called the
 // same thing every time with some sort of id of where the data file is to be
 // written and it's taken like from the CLI part of the profroam and new readers
-// / writers temporarily open it
+// writers temporarily open it
 
 // Since we have the file encapsulated from the builder
 LockFreeQueue *CreateQueue(const LockFreeQueueBuilder *builder);
-LockFreeQueueResult DestroyQueue(LockFreeQueue queue);
+int CreateSharedMemory(LockFreeQueue *queue);
+LockFreeQueueResult DestroyQueue(LockFreeQueue *&queue);
+LockFreeQueueResult AppendTo(LockFreeQueue *queue, const Message *message);
+LockFreeQueueResult DequeueFrom(LockFreeQueue *queue);
+Message *GetMessageContainer(LockFreeQueue *queue);
+void SetMessageContainer(LockFreeQueue *queue, Message *messageContainer);
+BufferSize GetMessageContainerLength(LockFreeQueue *queue);
+void SetMessageContainerLength(LockFreeQueue *queue,
+                               BufferSize messageContainerLength);
+const char *GetFilePath(LockFreeQueue *queue);
+void SetFilePath(LockFreeQueue *queue, const char *filePath);
+Message *GetEnqueueCell(LockFreeQueue *queue);
+void SetEnqueueCell(LockFreeQueue *queue, Message *enqueueCell);
+Message *GetDequeueCell(LockFreeQueue *queue);
+void SetDequeueCell(LockFreeQueue *queue, Message *dequeueCell);
 // LockFreeQueueResult AppendTo(LockFreeQueue* queue, uint64_t value);
